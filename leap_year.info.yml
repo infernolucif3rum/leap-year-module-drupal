@@ -1,0 +1,7 @@
+name: Leap Year
+description: Tells if the year is leap year or not.
+package: Custom
+configure: leap_year.settings
+
+type: module
+core: 8.x

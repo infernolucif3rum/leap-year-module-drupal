@@ -1,0 +1,6 @@
+leap_year.list:
+  title: 'Leap Year module settings'
+  description: 'COnfigure Leap checker Output'
+  route_name: leap_year.settings
+  route_name: user.admin_index
+  weight: 100

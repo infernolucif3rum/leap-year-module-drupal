@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Defines the variables used for calculator display settings.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function leap_year_uninstall() {
+  // Deleting variables on module uninstall.
+  \Drupal::state()->delete('leap_year.settings');
+
+}

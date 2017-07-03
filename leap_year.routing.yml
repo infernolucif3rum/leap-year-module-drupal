@@ -1,0 +1,7 @@
+leap_year.settings:
+  path: '/admin/config/people/leap_year/settings'
+  defaults:
+    _form: '\Drupal\leap_year\Form\AddForm'
+    _title: 'Leap Checker'
+  requirements:
+    _permission: 'Configure output'
