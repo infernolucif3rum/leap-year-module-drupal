@@ -1,18 +1,11 @@
 <?php
 
-
 namespace Drupal\leap_year\Form;
 
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Url;
-use Drupal\Component\Utility\UrlHelper;
 use Drupal\Core\Ajax\AjaxResponse;
-use Drupal\Core\Ajax\ChangedCommand;
-use Drupal\Core\Ajax\CssCommand;
 use Drupal\Core\Ajax\HtmlCommand;
-use Drupal\Core\Ajax\InvokeCommand;
-use Drupal\Core\Form;
 
 /**
  * Class AddForm.
@@ -33,42 +26,41 @@ class AddForm extends FormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
 
-    $form = array();
+    $form = [];
 
-
-
-    // Date Input
-    $form['inputdate'] = array(
+    // Date Input.
+    $form['inputdate'] = [
       '#title' => $this->t('Date to check'),
       '#type' => 'date',
       '#weight' => 1,
-      '#default_value' => ''
-    );
-
+      '#default_value' => '',
+    ];
 
     // Submit button definition.
-    $form['Check'] = array(
+    $form['Check'] = [
       '#type' => 'button',
       '#value' => $this->t('Calculate'),
       '#weight' => 2,
-      '#ajax' => array(
+      '#ajax' => [
         // Function to call when event on form element triggered.
         'callback' => '::calculateyear',
         'event' => 'click',
-        'progress' => array(
-          'type' => 'throbber', //WUT???
+        'progress' => [
+    // WUT???
+          'type' => 'throbber',
           'message' => 'Checking if leap year or not..',
-        ),
-      ),
-    );
+        ],
+      ],
+    ];
 
     // Results section markup.
-    $form['calculated'] = array(
+    $form['calculated'] = [
       '#type' => 'markup',
       '#weight' => 3,
       '#prefix' => '<div id="leap_year_calculated">',
-      '#suffix' => '</div>',// WUTTTT???
-    );
+    // WUTTTT???
+      '#suffix' => '</div>',
+    ];
     return $form;
   }
 
@@ -86,35 +78,38 @@ class AddForm extends FormBase {
 
   }
 
- // Function to check if leap year or not
-   public function calculateyear(array &$form, FormStateInterface $form_state) {
+  /**
+   * Function to check if leap year or not.
+   */
+  public function calculateyear(array &$form, FormStateInterface $form_state) {
 
-     $output = '';
-     // If input is not empty.
-     if (!empty($form_state->getValue('inputdate'))) {
-       $input_array = \explode('-', $form_state->getValue('inputdate'));
-       // Formatting user input.
-       $input = $input_array[2] . '-' . $input_array[1] . '-' . $input_array[0];
-       $year=$input_array[0];
+    $output = '';
+    // If input is not empty.
+    if (!empty($form_state->getValue('inputdate'))) {
+      $input_array = \explode('-', $form_state->getValue('inputdate'));
+      // Formatting user input.
+      $input = $input_array[2] . '-' . $input_array[1] . '-' . $input_array[0];
+      $year = $input_array[0];
 
-         if(($year%400==0)||(($year%4==0) && ($year%100!=0))){
-           $leap="It is a leap year";
-         }
-         else{
-           $leap="Not a leap year";
-         }
+      if (($year % 400 == 0)||(($year % 4 == 0) && ($year % 100 != 0))) {
+        $leap = "It is a leap year";
+      }
+      else {
+        $leap = "Not a leap year";
+      }
 
-           // Getting output.
-           $output = $leap;
+      // Getting output.
+      $output = $leap;
 
-       }
+    }
 
-     else {
-       $output = $this->t('Cannot be empty.');
-     }
+    else {
+      $output = $this->t('Cannot be empty.');
+    }
 
-     $response = new AjaxResponse();
-     $response->addCommand(new HtmlCommand('#leap_year_calculated', $output));
-     return $response;
-   }
+    $response = new AjaxResponse();
+    $response->addCommand(new HtmlCommand('#leap_year_calculated', $output));
+    return $response;
+  }
+
 }

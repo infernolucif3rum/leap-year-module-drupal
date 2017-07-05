@@ -1,12 +1,5 @@
 <?php
 
-
-
-/**
- * @file
- * Contains Drupal\leap_year\Plugin\Block\AgeBlock.
- */
-
 namespace Drupal\leap_year\Plugin\Block;
 
 use Drupal\Core\Access\AccessResult;
@@ -36,9 +29,9 @@ class LeapBlock extends BlockBase {
   public function build() {
     $form = \Drupal::formBuilder()->getForm('Drupal\leap_year\Form\AddForm');
 
-    return array(
+    return [
       'add_this_page' => $form,
-    );
+    ];
   }
 
 }
